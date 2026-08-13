@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-@Component({
+  @Component({
   selector: 'app-banner',
   imports: [],
   templateUrl: './banner.html',
