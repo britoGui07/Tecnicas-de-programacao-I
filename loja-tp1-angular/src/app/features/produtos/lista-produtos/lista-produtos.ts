@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { Produto } from '../../../model/produto';
 import { CardProduto } from '../card-produto/card-produto';
 
@@ -9,6 +9,15 @@ import { CardProduto } from '../card-produto/card-produto';
   styleUrl: './lista-produtos.css',
 })
 export class ListaProdutos {
+
+  apenasPromo = signal(false)
+
+  produtosExibidos = computed(() => this.apenasPromo() ? this.produtos.filter(p => p.promo) : this.produtos)
+
+  alterarPromo(){
+    this.apenasPromo.update(v => !v)
+  }
+
   produtos = <Produto[]>[
     {
       id: 1,
@@ -16,7 +25,8 @@ export class ListaProdutos {
       preco: 1699.99,
       descricao: 'Canetas caras demais. Deus me livre.',
       imageUrl: 'images/mounjaro.jpg',
-      promo: false
+      promo: false,
+      estado: 'novo',
     },
     {
       id: 2,
@@ -24,16 +34,28 @@ export class ListaProdutos {
       preco: 1299.94,
       descricao: 'Continuam caras. Deus continue me livrando.',
       imageUrl: 'images/ozempic.jpg',
-      promo: false
+      promo: false,
+      estado: 'usado',
     },
     {
       id: 3,
       nome: 'Wegovy',
       preco: 2500.00,
-      descricao: 'Misericórdia. Deus foi para floripa?.',
+      descricao: 'Misericórdia. Deus foi para floripa?',
       imageUrl: 'images/wegovy.jpg',
-      promo: true
+      promo: true,
+      estado: 'esgotado',
     },
+    {
+      id: 4,
+      nome: 'Novalgina',
+      preco: 17.90,
+      descricao: 'Será que bois sentem dor de cabeça?',
+      imageUrl: 'images/novalgina.jpg',
+      promo: false,
+      estado: 'novo',
+    },
+    
   ]
 
   onViewProduct(id: number){

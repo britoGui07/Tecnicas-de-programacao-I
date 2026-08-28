@@ -10,7 +10,7 @@ import { ListaProdutos } from './features/produtos/lista-produtos/lista-produtos
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, QuantidadeControle, CardProduto, ListaProdutos],
+  imports: [Header, Footer, CardProduto, ListaProdutos],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -19,7 +19,7 @@ export class App {
 
   sobre?: string
 
-  
+  x = signal(10)
 
   receberSobre(msg: string): void{
     this.sobre = msg
