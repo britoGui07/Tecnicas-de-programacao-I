@@ -16,12 +16,18 @@
                 <span class="selo promo">Aproveite</span>
             }
         </header>
-        <p class="desc">{{produto().descricao}}</p>
 
-        <!-- <div class="linhapreco">
-            <span class="preco">{{produto().preco | currency:'BRL': 'symbol': '1.2-2'}}</span>
-        </div> -->
-        
+
+
+
+
+
+        <p class="desc"> {{produto().descricao}}</p>
+
+        <!--<div class="linhapreco">
+            <span class="preco">{{produto().preco | currency:'BRL': 'symbol': '1.2-2 '}}</span>
+            <app-quantidade-controle [(contador)]="quantidade"></app-quantidade-controle>
+        </div>-->
         <div class="preco-container">
             @if(produto().promo){
                 <div class="preco-group">
@@ -35,12 +41,9 @@
             }
             @else {
                 <span class="preco">
-                    {{produto().preco | currency: 'BRL' : 'symbol' : '1.2-2'}}
+                    {{produto().preco  | currency: 'BRL'}}
                 </span>
-            }
-            
-            @if(produto().estado != 'esgotado'){
-                <app-quantidade-controle [(contador)]="quantidade"/>
+
             }
         </div>
 
