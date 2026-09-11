@@ -10,6 +10,6 @@ export class DescontoPipe implements PipeTransform {
       return 0
     }
     const precFinal = Math.min(Math.max(percentual, 0), 100)
-    return Math.round(1 - precFinal / 100)
+    return valor * (1 - precFinal / 100)
   }
 }

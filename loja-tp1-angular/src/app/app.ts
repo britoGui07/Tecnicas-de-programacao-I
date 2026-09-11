@@ -10,7 +10,7 @@ import { ListaProdutos } from './features/produtos/lista-produtos/lista-produtos
 
 @Component({
   selector: 'app-root',
-  imports: [Header, Footer, CardProduto, ListaProdutos],
+  imports: [Header, Footer, CardProduto, ListaProdutos, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
