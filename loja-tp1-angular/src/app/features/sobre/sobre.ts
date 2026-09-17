@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sobre',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './sobre.html',
   styleUrl: './sobre.css',
 })
-export class Sobre {}
+export class Sobre {
+  private router = inject(Router)
+
+  verPromo(){
+    this.router.navigate(['/produtos'], { queryParams: { promo: true } })
+  }
+}

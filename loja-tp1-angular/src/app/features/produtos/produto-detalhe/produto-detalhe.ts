@@ -33,9 +33,8 @@ export class ProdutoDetalhe {
         this.carregando.set(false)
       })
     })
-    
   }
-  
+
   voltar(){
   //  this.router.navigateByUrl('/produtos')
    this.router.navigate(['/produtos'])
