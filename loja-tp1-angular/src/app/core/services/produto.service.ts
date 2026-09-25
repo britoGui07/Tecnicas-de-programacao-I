@@ -67,4 +67,17 @@ export class ProdutoService {
   getById(id: number): Observable<Produto | undefined>{
     return of(this.listaMock.find(p => p.id ==id)).pipe(delay(500))
   }
+
+  criar(produto: Produto):Observable<any>{
+    
+    let body = {
+      title: produto.nome,
+      price: produto.preco,
+      description: produto.descricao,
+      image: produto.imageUrl,
+      category: produto.categoria
+    }
+    
+    return this.http.post(this.apiUrl,body)
+  }
 }
