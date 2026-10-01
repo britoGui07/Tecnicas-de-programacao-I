@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LoggerService } from '../../core/logger/logger.service';
-import { Produto, ProdutoMapper } from '../../model/produto';
+import { Produto, ProdutoMapper, ProdutoAPI } from '../../model/produto';
 import { catchError, delay, map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,6 +23,7 @@ export class ProdutoService {
       imageUrl: 'images/mounjaro.jpg',
       promo: false,
       estado: 'novo',
+      categoria: '',
     },
     {
       id: 2,
@@ -32,6 +33,7 @@ export class ProdutoService {
       imageUrl: 'images/ozempic.jpg',
       promo: false,
       estado: 'usado',
+      categoria: '',
     },
     {
       id: 3,
@@ -41,6 +43,7 @@ export class ProdutoService {
       imageUrl: 'images/wegovy.jpg',
       promo: true,
       estado: 'esgotado',
+      categoria: '',
     },
     {
       id: 4,
@@ -50,11 +53,12 @@ export class ProdutoService {
       imageUrl: 'images/novalgina.jpg',
       promo: false,
       estado: 'novo',
+      categoria: '',
     },
-];
+  ];
 
-  listar(): Observable<Produto[]>{
-    this.logger.info("PRODUTO SERVICE - retornando lista de produto");
+  listar(): Observable<Produto[]> {
+    this.logger.info("PRODUTO SERVICE listar() - consumindo api externa");
     return this.http.get<any[]>(this.apiUrl).pipe(
       map(lista => lista.map(prod => ProdutoMapper.fromJson(prod))),
       catchError(erro => {
@@ -62,14 +66,22 @@ export class ProdutoService {
         return of([])
       })
     )
-}
-
-  getById(id: number): Observable<Produto | undefined>{
-    return of(this.listaMock.find(p => p.id ==id)).pipe(delay(500))
   }
 
-  criar(produto: Produto):Observable<any>{
-    
+  getById(id: number): Observable<Produto | undefined> {
+    if (!Number.isInteger(id) || id <= 0) {
+      return of(undefined);
+    }
+    return this.http.get<ProdutoAPI>(`${this.apiUrl}/${id}`).pipe(
+      map(produto => ProdutoMapper.fromJson(produto)),
+      catchError(erro => {
+        this.logger.error(`[Produto Service] - Erro ao buscar produto ${id}`);
+        return of(undefined);
+      })
+    )
+  }
+
+  criar(produto: Produto): Observable<any> {
     let body = {
       title: produto.nome,
       price: produto.preco,
@@ -77,7 +89,6 @@ export class ProdutoService {
       image: produto.imageUrl,
       category: produto.categoria
     }
-    
-    return this.http.post(this.apiUrl,body)
+    return this.http.post(this.apiUrl, body)
   }
 }

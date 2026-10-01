@@ -43,7 +43,7 @@ export class ProdutoForm {
   }
 
   onSubmit(form: NgForm){
-    if(form.valid){
+    if(form.invalid){
       this.mensagem.set("Preencha todos os campos")
       return
     }
@@ -57,12 +57,12 @@ export class ProdutoForm {
       finalize(() => this.enviando.set(false))
     ).subscribe(
       {
-        next: (resp) => {
+        next: (resp: any) => {
           this.mensagem.set("Produto cadastrado com sucesso!")
           form.resetForm()
           setTimeout(() => this.router.navigateByUrl('/produtos'),1200)
         },
-        error: (err) => {
+        error: (err: any) => {
           this.mensagem.set("Erro ao criar produto: " +err)
         }
       }
